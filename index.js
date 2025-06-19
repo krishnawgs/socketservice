@@ -7,15 +7,9 @@ const { Server } = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: 'https://jazzy-bavarois-27e7fc.netlify.app',
-        methods: ['GET', 'POST'],
-        credentials: true,
-    },
-});
+const io = new Server(server);
 
-app.use(cors({ origin: 'https://jazzy-bavarois-27e7fc.netlify.app', credentials: true }));
+app.use(cors());
 app.use(express.json());
 
 mongoose.connect('mongodb+srv://dev:xjvcptTN8CZ0G98q@cluster0.ricqecm.mongodb.net/Healboxx')
