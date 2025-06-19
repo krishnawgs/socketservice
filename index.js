@@ -6,11 +6,20 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
-
-app.use(cors());
+const corsOptions = {
+    origin: '*', // Or specify array like ['http://localhost:3000']
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: corsOptions,
+});
+
+
 
 mongoose.connect('mongodb+srv://dev:xjvcptTN8CZ0G98q@cluster0.ricqecm.mongodb.net/Healboxx')
     .then(() => console.log('MongoDB connected'))
@@ -127,7 +136,7 @@ app.post('/messages', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the Healboxx Chat API');
+    res.send('Welcome to the Healboxx Chat API...');
 });
 
 const PORT = process.env.PORT || 3001;
