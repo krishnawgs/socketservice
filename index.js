@@ -7,7 +7,7 @@ const { Server } = require('socket.io');
 
 const app = express();
 const corsOptions = {
-    origin: '*', // Or specify array like ['http://localhost:3000']
+    origin: '*', // Allow all origins for development; consider restricting in production
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -16,10 +16,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: corsOptions,
+    cors: corsOptions, // Apply same CORS config to Socket.IO
 });
-
-
 
 mongoose.connect('mongodb+srv://dev:xjvcptTN8CZ0G98q@cluster0.ricqecm.mongodb.net/Healboxx')
     .then(() => console.log('MongoDB connected'))
